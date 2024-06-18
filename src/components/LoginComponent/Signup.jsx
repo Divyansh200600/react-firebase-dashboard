@@ -1,0 +1,38 @@
+// components/Signup.js
+import React, { useState } from 'react';
+import { auth } from '../../utils/Firebase/firebaseConfig';
+
+const Signup = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignup = async () => {
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      console.log('Signup successful:', userCredential.user);
+    } catch (error) {
+      console.error('Error signing up:', error.message);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Signup</h2>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <button onClick={handleSignup}>Signup</button>
+    </div>
+  );
+};
+
+export default Signup;
